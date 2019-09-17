@@ -1,14 +1,11 @@
 import { createActions } from 'redux-actions';
 
-import * as api from 'api/api';
-import { addMovieToActiveList } from '../lists/actions';
-import { getMovies, getResultForMovieSearch } from './selectors';
-
 export const {
+  fetchMovie,
   movieReceived,
   movieSearchResultReceived,
   setIsSearchFetching,
-  setSearchValueInState,
+  setSearchValue,
 } = createActions({
   /**
    * @param {boolean} isFetching
@@ -29,61 +26,12 @@ export const {
   /**
    * @param {string} value
    */
-  SET_SEARCH_VALUE_IN_STATE: value => ({ value }),
+  SET_SEARCH_VALUE: value => ({ value }),
+
+  // Actions handled only by sagas
+
+  /**
+   * @param {string} id
+   */
+  FETCH_MOVIE: id => ({ id }),
 });
-
-let movieSearch;
-
-/**
- * @param {string} key
- */
-const searchMovies = key => (dispatch, getState) => {
-  const trimmedKey = key.trim();
-  const result = getResultForMovieSearch(getState(), { key: trimmedKey });
-
-  if (trimmedKey.length < 3 || result) {
-    dispatch(setIsSearchFetching(false));
-    return;
-  }
-
-  dispatch(setIsSearchFetching(true));
-
-  window.clearTimeout(movieSearch);
-  movieSearch = window.setTimeout(() => {
-    api
-      .searchMovies(trimmedKey)
-      .then(movies => {
-        dispatch(movieSearchResultReceived(trimmedKey, movies));
-      })
-      .catch(console.error)
-      .finally(() => {
-        dispatch(setIsSearchFetching(false));
-      });
-  }, 400);
-};
-
-/**
- * @param {string} value
- */
-export const setSearchValue = value => dispatch => {
-  dispatch(setSearchValueInState(value));
-  dispatch(searchMovies(value));
-};
-
-/**
- * @param {string} id
- */
-export const fetchMovie = id => (dispatch, getState) => {
-  dispatch(addMovieToActiveList(id));
-
-  if (getMovies(getState())[id]) {
-    return;
-  }
-
-  api
-    .getMovie(id)
-    .then(movie => {
-      dispatch(movieReceived(movie));
-    })
-    .catch(console.error);
-};

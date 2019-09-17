@@ -4,7 +4,7 @@ import {
   movieReceived,
   movieSearchResultReceived,
   setIsSearchFetching,
-  setSearchValueInState,
+  setSearchValue,
 } from './actions';
 
 export const defaultState = {
@@ -41,7 +41,7 @@ const moviesReducer = produce((draftState = defaultState, action) => {
       draftState.items[payload.movie.imdbId] = payload.movie;
       break;
 
-    case setSearchValueInState.toString():
+    case setSearchValue.toString():
       draftState.currentSearchValue = payload.value;
       break;
 
