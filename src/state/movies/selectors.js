@@ -1,34 +1,34 @@
-import { createSelector } from 'reselect';
-
 import { getLists, getActiveList } from '../lists/selectors';
 
-export const getMovies = state => state.movies.items;
+export const getMovies = movies => movies.items;
 
-export const getMoviesForActiveList = createSelector(
-  getLists,
-  getActiveList,
-  getMovies,
-  (lists, activeList, movies) => {
-    if (activeList === undefined) {
-      return [];
-    }
-    return lists
-      .find(({ id }) => id === activeList)
-      .movies.map(movieId => {
-        const movieData = movies[movieId];
-        return movieData || { imdbId: movieId };
-      });
-  },
-);
+export const getMoviesForActiveList = ({
+  lists: listsState,
+  movies: moviesState,
+}) => {
+  const lists = getLists(listsState);
+  const activeList = getActiveList(listsState);
+  const movies = getMovies(moviesState);
 
-export const getResultForMovieSearch = (state, { key }) =>
-  state.movies.searchKeys[key];
+  if (activeList === undefined) {
+    return [];
+  }
+  return lists
+    .find(({ id }) => id === activeList)
+    .movies.map(movieId => {
+      const movieData = movies[movieId];
+      return movieData || { imdbId: movieId };
+    });
+};
 
-export const getSearchValue = state => state.movies.currentSearchValue;
+export const getResultForMovieSearch = (movies, { key }) =>
+  movies.searchKeys[key];
 
-export const getOptionsForCurrentSearch = state => {
-  const value = getSearchValue(state);
-  const options = getResultForMovieSearch(state, { key: value.trim() });
+export const getSearchValue = movies => movies.currentSearchValue;
+
+export const getOptionsForCurrentSearch = movies => {
+  const value = getSearchValue(movies);
+  const options = getResultForMovieSearch(movies, { key: value.trim() });
 
   return options
     ? options.map(({ title, year, imdbId }) => ({
@@ -38,4 +38,4 @@ export const getOptionsForCurrentSearch = state => {
     : [];
 };
 
-export const isSearchFetching = state => state.movies.isSearchFetching;
+export const isSearchFetching = movies => movies.isSearchFetching;

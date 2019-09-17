@@ -1,3 +1,3 @@
-export const getLists = state => state.lists.items;
+export const getLists = lists => lists.items;
 
-export const getActiveList = state => state.lists.active;
+export const getActiveList = lists => lists.active;
