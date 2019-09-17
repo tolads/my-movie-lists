@@ -1,43 +1,35 @@
+import { createActions } from 'redux-actions';
+
 import * as api from 'api/api';
 import { addMovieToActiveList } from '../lists/actions';
 import { getMovies, getResultForMovieSearch } from './selectors';
 
-export const MOVIE_RECEIVED = 'MOVIE_RECEIVED';
-export const MOVIE_SEARCH_RESULT_RECEIVED = 'MOVIE_SEARCH_RESULT_RECEIVED';
-export const SET_IS_SEARCH_FETCHING = 'SET_IS_SEARCH_FETCHING';
-export const SET_SEARCH_VALUE_IN_STATE = 'SET_SEARCH_VALUE_IN_STATE';
+export const {
+  movieReceived,
+  movieSearchResultReceived,
+  setIsSearchFetching,
+  setSearchValueInState,
+} = createActions({
+  /**
+   * @param {boolean} isFetching
+   */
+  SET_IS_SEARCH_FETCHING: isFetching => ({ isFetching }),
 
-/**
- * @param {boolean} isFetching
- */
-const setIsSearchFetching = isFetching => ({
-  type: SET_IS_SEARCH_FETCHING,
-  payload: { isFetching },
-});
+  /**
+   * @param {string} key
+   * @param {Object[]} result
+   */
+  MOVIE_SEARCH_RESULT_RECEIVED: (key, movies) => ({ key, movies }),
 
-/**
- * @param {string} key
- * @param {Object[]} result
- */
-export const movieSearchResultReceived = (key, movies) => ({
-  type: MOVIE_SEARCH_RESULT_RECEIVED,
-  payload: { key, movies },
-});
+  /**
+   * @param {Object} movie
+   */
+  MOVIE_RECEIVED: movie => ({ movie }),
 
-/**
- * @param {Object} movie
- */
-export const movieReceived = movie => ({
-  type: MOVIE_RECEIVED,
-  payload: { movie },
-});
-
-/**
- * @param {string} value
- */
-const setSearchValueInState = value => ({
-  type: SET_SEARCH_VALUE_IN_STATE,
-  payload: { value },
+  /**
+   * @param {string} value
+   */
+  SET_SEARCH_VALUE_IN_STATE: value => ({ value }),
 });
 
 let movieSearch;

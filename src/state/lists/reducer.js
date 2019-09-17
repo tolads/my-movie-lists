@@ -1,14 +1,14 @@
 import produce from 'immer';
 
 import {
-  ADD_LIST,
-  ADD_MOVIE_TO_ACTIVE_LIST,
-  DELETE_LIST,
-  MOVE_MOVIE_DOWN_IN_ACTIVE_LIST,
-  MOVE_MOVIE_UP_IN_ACTIVE_LIST,
-  REMOVE_MOVIE_FROM_ACTIVE_LIST,
-  RENAME_LIST,
-  SET_ACTIVE_LIST,
+  addList,
+  addMovieToActiveList,
+  deleteList,
+  moveMovieDownInActiveList,
+  moveMovieUpInActiveList,
+  removeMovieFromActiveList,
+  renameList,
+  setActiveList,
 } from './actions';
 
 const id = Date.now();
@@ -28,17 +28,17 @@ const listsReducer = produce((draftState = defaultState, action) => {
   );
 
   switch (type) {
-    case ADD_LIST:
+    case addList.toString():
       draftState.active = payload.id;
       draftState.items.push({ id: payload.id, label: '', movies: [] });
       break;
 
-    case RENAME_LIST:
+    case renameList.toString():
       draftState.items.find(item => item.id === payload.id).label =
         payload.label;
       break;
 
-    case DELETE_LIST:
+    case deleteList.toString():
       draftState.items = draftState.items.filter(
         item => item.id !== payload.id,
       );
@@ -49,23 +49,23 @@ const listsReducer = produce((draftState = defaultState, action) => {
       }
       break;
 
-    case SET_ACTIVE_LIST:
+    case setActiveList.toString():
       draftState.active = payload.id;
       break;
 
-    case ADD_MOVIE_TO_ACTIVE_LIST:
+    case addMovieToActiveList.toString():
       if (activeItem.movies.every(movieId => movieId !== payload.movieId)) {
         activeItem.movies.push(payload.movieId);
       }
       break;
 
-    case REMOVE_MOVIE_FROM_ACTIVE_LIST:
+    case removeMovieFromActiveList.toString():
       activeItem.movies = activeItem.movies.filter(
         movieId => movieId !== payload.movieId,
       );
       break;
 
-    case MOVE_MOVIE_UP_IN_ACTIVE_LIST: {
+    case moveMovieUpInActiveList.toString(): {
       const { movies } = activeItem;
       const index = movies.indexOf(payload.movieId);
       if (index === 0) {
@@ -81,7 +81,7 @@ const listsReducer = produce((draftState = defaultState, action) => {
       break;
     }
 
-    case MOVE_MOVIE_DOWN_IN_ACTIVE_LIST: {
+    case moveMovieDownInActiveList.toString(): {
       const { movies } = activeItem;
       const index = movies.indexOf(payload.movieId);
       if (index === movies.length - 1) {

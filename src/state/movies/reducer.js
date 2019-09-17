@@ -1,10 +1,10 @@
 import produce from 'immer';
 
 import {
-  MOVIE_RECEIVED,
-  MOVIE_SEARCH_RESULT_RECEIVED,
-  SET_IS_SEARCH_FETCHING,
-  SET_SEARCH_VALUE_IN_STATE,
+  movieReceived,
+  movieSearchResultReceived,
+  setIsSearchFetching,
+  setSearchValueInState,
 } from './actions';
 
 export const defaultState = {
@@ -29,19 +29,19 @@ const moviesReducer = produce((draftState = defaultState, action) => {
   const { payload, type } = action;
 
   switch (type) {
-    case SET_IS_SEARCH_FETCHING:
+    case setIsSearchFetching.toString():
       draftState.isSearchFetching = payload.isFetching;
       break;
 
-    case MOVIE_SEARCH_RESULT_RECEIVED:
+    case movieSearchResultReceived.toString():
       draftState.searchKeys[payload.key] = payload.movies;
       break;
 
-    case MOVIE_RECEIVED:
+    case movieReceived.toString():
       draftState.items[payload.movie.imdbId] = payload.movie;
       break;
 
-    case SET_SEARCH_VALUE_IN_STATE:
+    case setSearchValueInState.toString():
       draftState.currentSearchValue = payload.value;
       break;
 
