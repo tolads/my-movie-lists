@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import {
   MOVIE_RECEIVED,
   MOVIE_SEARCH_RESULT_RECEIVED,
@@ -22,37 +24,30 @@ export const defaultState = {
   isSearchFetching: false,
 };
 
-const moviesReducer = (state = defaultState, action) => {
+// eslint-disable-next-line consistent-return
+const moviesReducer = produce((draftState = defaultState, action) => {
   const { payload, type } = action;
 
   switch (type) {
     case SET_IS_SEARCH_FETCHING:
-      return {
-        ...state,
-        isSearchFetching: payload.isFetching,
-      };
+      draftState.isSearchFetching = payload.isFetching;
+      break;
 
     case MOVIE_SEARCH_RESULT_RECEIVED:
-      return {
-        ...state,
-        searchKeys: { ...state.searchKeys, [payload.key]: payload.movies },
-      };
+      draftState.searchKeys[payload.key] = payload.movies;
+      break;
 
     case MOVIE_RECEIVED:
-      return {
-        ...state,
-        items: { ...state.items, [payload.movie.imdbId]: payload.movie },
-      };
+      draftState.items[payload.movie.imdbId] = payload.movie;
+      break;
 
     case SET_SEARCH_VALUE_IN_STATE:
-      return {
-        ...state,
-        currentSearchValue: payload.value,
-      };
+      draftState.currentSearchValue = payload.value;
+      break;
 
     default:
-      return state;
+      return draftState;
   }
-};
+});
 
 export default moviesReducer;

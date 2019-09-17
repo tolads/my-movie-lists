@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import {
   ADD_LIST,
   ADD_MOVIE_TO_ACTIVE_LIST,
@@ -18,97 +20,86 @@ export const defaultState = {
   active: id,
 };
 
-const updateMoviesInActiveList = (state, fn) => ({
-  ...state,
-  items: state.items.map(item => {
-    if (item.id !== state.active) {
-      return item;
-    }
-    return { ...item, movies: fn(item.movies) };
-  }),
-});
-
-const listsReducer = (state = defaultState, action) => {
+// eslint-disable-next-line consistent-return
+const listsReducer = produce((draftState = defaultState, action) => {
   const { payload, type } = action;
+  const activeItem = draftState.items.find(
+    item => item.id === draftState.active,
+  );
 
   switch (type) {
     case ADD_LIST:
-      return {
-        ...state,
-        active: payload.id,
-        items: [...state.items, { id: payload.id, label: '', movies: [] }],
-      };
+      draftState.active = payload.id;
+      draftState.items.push({ id: payload.id, label: '', movies: [] });
+      break;
 
     case RENAME_LIST:
-      return {
-        ...state,
-        items: state.items.map(item => {
-          if (item.id !== payload.id) {
-            return item;
-          }
-          return { ...item, label: payload.label };
-        }),
-      };
+      draftState.items.find(item => item.id === payload.id).label =
+        payload.label;
+      break;
 
-    case DELETE_LIST: {
-      const newItems = state.items.filter(item => item.id !== payload.id);
-      if (state.active === payload.id) {
-        return {
-          ...state,
-          items: newItems,
-          active: newItems.length ? newItems[0].id : undefined,
-        };
+    case DELETE_LIST:
+      draftState.items = draftState.items.filter(
+        item => item.id !== payload.id,
+      );
+      if (draftState.active === payload.id) {
+        draftState.active = draftState.items.length
+          ? draftState.items[0].id
+          : undefined;
       }
-      return { ...state, items: newItems };
-    }
+      break;
 
     case SET_ACTIVE_LIST:
-      return { ...state, active: payload.id };
+      draftState.active = payload.id;
+      break;
 
     case ADD_MOVIE_TO_ACTIVE_LIST:
-      return updateMoviesInActiveList(state, movies => {
-        if (movies.some(movieId => movieId === payload.movieId)) {
-          return movies;
-        }
-        return [...movies, payload.movieId];
-      });
+      if (activeItem.movies.every(movieId => movieId !== payload.movieId)) {
+        activeItem.movies.push(payload.movieId);
+      }
+      break;
 
     case REMOVE_MOVIE_FROM_ACTIVE_LIST:
-      return updateMoviesInActiveList(state, movies => {
-        return movies.filter(movieId => movieId !== payload.movieId);
-      });
+      activeItem.movies = activeItem.movies.filter(
+        movieId => movieId !== payload.movieId,
+      );
+      break;
 
-    case MOVE_MOVIE_UP_IN_ACTIVE_LIST:
-      return updateMoviesInActiveList(state, movies => {
-        const index = movies.indexOf(payload.movieId);
-        if (index === 0) {
-          return [...movies.slice(1), movies[0]];
-        }
-        return [
+    case MOVE_MOVIE_UP_IN_ACTIVE_LIST: {
+      const { movies } = activeItem;
+      const index = movies.indexOf(payload.movieId);
+      if (index === 0) {
+        activeItem.movies = [...movies.slice(1), movies[0]];
+      } else {
+        activeItem.movies = [
           ...movies.slice(0, index - 1),
           movies[index],
           movies[index - 1],
           ...movies.slice(index + 1),
         ];
-      });
+      }
+      break;
+    }
 
-    case MOVE_MOVIE_DOWN_IN_ACTIVE_LIST:
-      return updateMoviesInActiveList(state, movies => {
-        const index = movies.indexOf(payload.movieId);
-        if (index === movies.length - 1) {
-          return [movies[movies.length - 1], ...movies.slice(0, -1)];
-        }
-        return [
+    case MOVE_MOVIE_DOWN_IN_ACTIVE_LIST: {
+      const { movies } = activeItem;
+      const index = movies.indexOf(payload.movieId);
+      if (index === movies.length - 1) {
+        activeItem.movies = [movies[movies.length - 1], ...movies.slice(0, -1)];
+      } else {
+        activeItem.movies = [
           ...movies.slice(0, index),
           movies[index + 1],
           movies[index],
           ...movies.slice(index + 2),
         ];
-      });
+      }
+      break;
+    }
 
     default:
-      return state;
+      return draftState;
   }
-};
+});
 
 export default listsReducer;
