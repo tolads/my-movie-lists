@@ -7,9 +7,11 @@
       "name": "Tamás László"
     }
   ],
+  "homepage": "https://tolads.github.io/my-movie-lists",
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
+    "gh-pages": "^2.1.1",
     "immer": "^4.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -35,6 +37,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "test-js": "cross-env CI=true react-scripts test",
     "lint-js": "node node_modules/eslint/bin/eslint.js src/ --config .eslintrc.js",
