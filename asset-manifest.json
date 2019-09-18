@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/my-movie-lists/static/js/main.ead52e61.chunk.js",
+    "main.js.map": "/my-movie-lists/static/js/main.ead52e61.chunk.js.map",
+    "runtime~main.js": "/my-movie-lists/static/js/runtime~main.1f4fe7f2.js",
+    "runtime~main.js.map": "/my-movie-lists/static/js/runtime~main.1f4fe7f2.js.map",
+    "static/js/2.370f3196.chunk.js": "/my-movie-lists/static/js/2.370f3196.chunk.js",
+    "static/js/2.370f3196.chunk.js.map": "/my-movie-lists/static/js/2.370f3196.chunk.js.map",
+    "index.html": "/my-movie-lists/index.html",
+    "precache-manifest.daa9e69b5bd39c9e4e3236b1e3038966.js": "/my-movie-lists/precache-manifest.daa9e69b5bd39c9e4e3236b1e3038966.js",
+    "service-worker.js": "/my-movie-lists/service-worker.js"
+  }
+}
