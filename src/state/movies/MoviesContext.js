@@ -8,7 +8,7 @@ import {
   MOVIE_SEARCH_RESULT_RECEIVED,
   SET_IS_SEARCH_FETCHING,
   SET_SEARCH_VALUE_IN_STATE,
-} from './actions';
+} from './actionTypes';
 import reducer, { defaultState } from './reducer';
 import { getMovies, getResultForMovieSearch } from './selectors';
 

@@ -10,7 +10,7 @@ import {
   REMOVE_MOVIE_FROM_ACTIVE_LIST,
   RENAME_LIST,
   SET_ACTIVE_LIST,
-} from './actions';
+} from './actionTypes';
 import reducer, { defaultState } from './reducer';
 
 export const ListsContext = createContext();

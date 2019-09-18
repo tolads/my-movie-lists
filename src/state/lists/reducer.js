@@ -9,7 +9,7 @@ import {
   REMOVE_MOVIE_FROM_ACTIVE_LIST,
   RENAME_LIST,
   SET_ACTIVE_LIST,
-} from './actions';
+} from './actionTypes';
 
 const id = Date.now();
 export const defaultState = {
