@@ -4,6 +4,9 @@ module.exports = {
   parser: 'babel-eslint',
   parserOptions: {
     sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
   },
   extends: ['airbnb', 'plugin:prettier/recommended'],
   settings: {
