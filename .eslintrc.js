@@ -25,5 +25,6 @@ module.exports = {
     window: true,
     document: true,
     navigator: true,
+    cy: true,
   },
 };

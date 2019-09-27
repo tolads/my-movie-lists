@@ -39,12 +39,16 @@ const Lists = ({
     <>
       <div className={classes.header}>
         <Typography variant="subtitle1">My lists</Typography>
-        <IconButton color="primary" onClick={addList}>
+        <IconButton
+          color="primary"
+          data-test-id="create-list-btn"
+          onClick={addList}
+        >
           <AddIcon />
         </IconButton>
       </div>
       <Paper>
-        <List component="nav">
+        <List component="nav" data-test-id="lists-list">
           {lists.map(({ id, label }) => (
             <ListItem
               key={id}
