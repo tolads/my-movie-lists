@@ -89,6 +89,7 @@ const ListItem = ({
         <IconButton
           aria-label="delete"
           className={classes.deleteButton}
+          data-test-id="delete-btn"
           edge="end"
           onClick={deleteList}
         >
