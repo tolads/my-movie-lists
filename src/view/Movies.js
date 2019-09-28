@@ -1,6 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -14,8 +13,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import * as listActions from 'state/lists/actions';
-import { getMoviesForActiveList } from 'state/movies/selectors';
+import { ListsContext } from 'state/lists/ListsContext';
+import { MoviesContext } from 'state/movies/MoviesContext';
 
 const highlightBackground = '#EDEDED';
 const useStyles = makeStyles(() => ({
@@ -63,7 +62,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Table = ({ moveDown, moveUp, movies, remove }) => {
+const Table = () => {
+  const {
+    moveMovieDownInActiveList: moveDown,
+    moveMovieUpInActiveList: moveUp,
+    removeMovieFromActiveList: remove,
+  } = useContext(ListsContext);
+  const { moviesForActiveList: movies } = useContext(MoviesContext);
   const classes = useStyles();
 
   const columns = [
@@ -165,33 +170,4 @@ const Table = ({ moveDown, moveUp, movies, remove }) => {
   );
 };
 
-Table.propTypes = {
-  moveDown: PropTypes.func.isRequired,
-  moveUp: PropTypes.func.isRequired,
-  movies: PropTypes.arrayOf(
-    PropTypes.shape({
-      genre: PropTypes.string,
-      imdbId: PropTypes.string.isRequired,
-      poster: PropTypes.string,
-      rating: PropTypes.string,
-      title: PropTypes.string,
-      year: PropTypes.string,
-    }),
-  ).isRequired,
-  remove: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({
-  movies: getMoviesForActiveList(state),
-});
-
-const mapDispatchToProps = {
-  moveDown: listActions.moveMovieDownInActiveList,
-  moveUp: listActions.moveMovieUpInActiveList,
-  remove: listActions.removeMovieFromActiveList,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Table);
+export default observer(Table);

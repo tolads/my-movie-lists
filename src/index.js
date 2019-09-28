@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 
-import configureStore from 'state/store';
+import ListsProvider from 'state/lists/ListsContext';
+import MoviesProvider from 'state/movies/MoviesContext';
 import App from 'view/App';
-
-const store = configureStore();
 
 const renderApp = () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+    <ListsProvider>
+      <MoviesProvider>
+        <App />
+      </MoviesProvider>
+    </ListsProvider>,
     document.getElementById('root'),
   );
 };

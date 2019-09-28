@@ -1,17 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 import Select from 'react-select';
-import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 
-import * as movieActions from 'state/movies/actions';
-import {
-  getOptionsForCurrentSearch,
-  getSearchValue,
-  isSearchFetching,
-} from 'state/movies/selectors';
+import { MoviesContext } from 'state/movies/MoviesContext';
 
-const Search = ({ fetchMovie, isLoading, options, setValue, value }) => {
+const Search = () => {
+  const {
+    fetchMovie,
+    isLoading,
+    optionsForCurrentSearch: options,
+    searchValue: value,
+    setSearchValue: setValue,
+  } = useContext(MoviesContext);
   const handleInputChange = newValue => {
     setValue(newValue);
   };
@@ -34,31 +35,4 @@ const Search = ({ fetchMovie, isLoading, options, setValue, value }) => {
   );
 };
 
-Search.propTypes = {
-  fetchMovie: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  setValue: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = state => ({
-  isLoading: isSearchFetching(state),
-  options: getOptionsForCurrentSearch(state),
-  value: getSearchValue(state),
-});
-
-const mapDispatchToProps = {
-  fetchMovie: movieActions.fetchMovie,
-  setValue: movieActions.setSearchValue,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Search);
+export default observer(Search);
