@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { observer } from 'mobx-react-lite';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -109,4 +110,4 @@ ListItem.propTypes = {
   setActiveList: PropTypes.func.isRequired,
 };
 
-export default ListItem;
+export default observer(ListItem);

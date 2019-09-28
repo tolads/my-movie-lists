@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useRef } from 'react';
+import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,8 +7,7 @@ import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import * as listActions from 'state/lists/actions';
-import { getActiveList, getLists } from 'state/lists/selectors';
+import { ListsContext } from 'state/lists/ListsContext';
 import ListItem from './ListItem';
 
 const useStyles = makeStyles(() => ({
@@ -20,14 +18,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Lists = ({
-  activeList,
-  addList,
-  deleteList,
-  lists,
-  renameList,
-  setActiveList,
-}) => {
+const Lists = () => {
+  const {
+    activeList,
+    addList,
+    deleteList,
+    listsJS: lists,
+    renameList,
+    setActiveList,
+  } = useContext(ListsContext);
   const classes = useStyles();
   const prevLists = useRef();
 
@@ -71,32 +70,4 @@ const Lists = ({
   );
 };
 
-Lists.propTypes = {
-  activeList: PropTypes.number,
-  addList: PropTypes.func.isRequired,
-  deleteList: PropTypes.func.isRequired,
-  lists: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  renameList: PropTypes.func.isRequired,
-  setActiveList: PropTypes.func.isRequired,
-};
-
-Lists.defaultProps = {
-  activeList: undefined,
-};
-
-const mapStateToProps = state => ({
-  activeList: getActiveList(state),
-  lists: getLists(state),
-});
-
-const mapDispatchToProps = {
-  addList: listActions.addList,
-  deleteList: listActions.deleteList,
-  renameList: listActions.renameList,
-  setActiveList: listActions.setActiveList,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Lists);
+export default observer(Lists);
