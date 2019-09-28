@@ -20,7 +20,7 @@ const Search = ({ fetchMovie, isLoading, options, setValue, value }) => {
   };
 
   return (
-    <Box my={2}>
+    <Box my={2} data-test-id="search-container">
       <Select
         filterOption={null}
         isLoading={isLoading}

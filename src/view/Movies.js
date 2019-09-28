@@ -76,18 +76,21 @@ const Table = ({ moveDown, moveUp, movies, remove }) => {
           <div className={classes.icons}>
             <IconButton
               className={classes.button}
+              data-test-id="move-up-btn"
               onClick={() => moveUp(movie.imdbId)}
             >
               <ArrowDropUpIcon fontSize="small" />
             </IconButton>
             <IconButton
               className={classes.button}
+              data-test-id="remove-btn"
               onClick={() => remove(movie.imdbId)}
             >
               <DeleteIcon fontSize="small" />
             </IconButton>
             <IconButton
               className={classes.button}
+              data-test-id="move-down-btn"
               onClick={() => moveDown(movie.imdbId)}
             >
               <ArrowDropDownIcon fontSize="small" />
@@ -128,7 +131,7 @@ const Table = ({ moveDown, moveUp, movies, remove }) => {
 
   return (
     <Paper className={classes.root}>
-      <DataTable stickyHeader>
+      <DataTable data-test-id="movies-table" stickyHeader>
         <TableHead>
           <TableRow>
             {columns.map(({ header }) => (
