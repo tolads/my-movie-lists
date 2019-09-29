@@ -17,7 +17,7 @@ const setIsSearchFetching = isFetching => ({
 
 /**
  * @param {string} key
- * @param {Object[]} result
+ * @param {Object[]} movies
  */
 export const movieSearchResultReceived = (key, movies) => ({
   type: MOVIE_SEARCH_RESULT_RECEIVED,
