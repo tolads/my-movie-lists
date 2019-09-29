@@ -3,16 +3,18 @@ import { observer } from 'mobx-react-lite';
 import Select from 'react-select';
 import Box from '@material-ui/core/Box';
 
-import { MoviesContext } from 'state/movies/MoviesContext';
+import { Context } from 'state/store';
 
 const Search = () => {
   const {
-    fetchMovie,
-    isLoading,
-    optionsForCurrentSearch: options,
-    searchValue: value,
-    setSearchValue: setValue,
-  } = useContext(MoviesContext);
+    movies: {
+      fetchMovie,
+      isLoading,
+      optionsForCurrentSearch: options,
+      searchValue: value,
+      setSearchValue: setValue,
+    },
+  } = useContext(Context);
   const handleInputChange = newValue => {
     setValue(newValue);
   };

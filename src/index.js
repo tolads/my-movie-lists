@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ListsProvider from 'state/lists/ListsContext';
-import MoviesProvider from 'state/movies/MoviesContext';
+import Provider from 'state/store';
 import App from 'view/App';
 
 const renderApp = () => {
   ReactDOM.render(
-    <ListsProvider>
-      <MoviesProvider>
-        <App />
-      </MoviesProvider>
-    </ListsProvider>,
+    <Provider>
+      <App />
+    </Provider>,
     document.getElementById('root'),
   );
 };
