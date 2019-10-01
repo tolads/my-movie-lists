@@ -17,7 +17,7 @@ const transformMovie = movie => ({
  */
 export const searchMovies = key =>
   request(
-    `http://www.omdbapi.com/?apikey=${omdbApiKey}&type=movie&s=${key}`,
+    `https://www.omdbapi.com/?apikey=${omdbApiKey}&type=movie&s=${key}`,
   ).then(({ Search }) => (Search ? Search.map(transformMovie) : []));
 
 /**
@@ -25,5 +25,5 @@ export const searchMovies = key =>
  */
 export const getMovie = id =>
   request(
-    `http://www.omdbapi.com/?apikey=${omdbApiKey}&type=movie&i=${id}`,
+    `https://www.omdbapi.com/?apikey=${omdbApiKey}&type=movie&i=${id}`,
   ).then(transformMovie);
