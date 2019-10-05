@@ -1,4 +1,4 @@
-import { action, observable, computed } from 'mobx';
+import { action, computed, observable, reaction } from 'mobx';
 
 import * as api from 'api/api';
 import listsStore from '../lists/ListsStore';
@@ -17,6 +17,35 @@ export class MoviesStore {
         rating: '9.3',
       },
     };
+
+    // Handle the change of the `searchValue` field
+    reaction(
+      () => this.searchValue,
+      searchValue => {
+        const trimmedKey = searchValue.trim();
+        const result = this.searchKeys[trimmedKey];
+
+        if (trimmedKey.length < 3 || result) {
+          this.setIsSearchFetching(false);
+          return;
+        }
+
+        this.setIsSearchFetching(true);
+
+        window.clearTimeout(this.movieSearch);
+        this.movieSearch = window.setTimeout(() => {
+          api
+            .searchMovies(trimmedKey)
+            .then(movies => {
+              this.movieSearchResultReceived(trimmedKey, movies);
+            })
+            .catch(console.error)
+            .finally(() => {
+              this.setIsSearchFetching(false);
+            });
+        }, 400);
+      },
+    );
   }
 
   @observable items = {};
@@ -100,42 +129,11 @@ export class MoviesStore {
     this.items[movie.imdbId] = movie;
   }
 
-  movieSearch;
-
-  /**
-   * @param {string} key
-   */
-  @action.bound searchMovies(key) {
-    const trimmedKey = key.trim();
-    const result = this.searchKeys[trimmedKey];
-
-    if (trimmedKey.length < 3 || result) {
-      this.setIsSearchFetching(false);
-      return;
-    }
-
-    this.setIsSearchFetching(true);
-
-    window.clearTimeout(this.movieSearch);
-    this.movieSearch = window.setTimeout(() => {
-      api
-        .searchMovies(trimmedKey)
-        .then(movies => {
-          this.movieSearchResultReceived(trimmedKey, movies);
-        })
-        .catch(console.error)
-        .finally(() => {
-          this.setIsSearchFetching(false);
-        });
-    }, 400);
-  }
-
   /**
    * @param {string} value
    */
   @action.bound setSearchValue(value) {
     this.currentSearchValue = value;
-    this.searchMovies(value);
   }
 
   /**
