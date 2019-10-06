@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { configure } from 'mobx';
 
 import ListsProvider from 'state/lists/ListsContext';
 import MoviesProvider from 'state/movies/MoviesContext';
 import App from 'view/App';
+
+configure({ enforceActions: 'observed' });
 
 const renderApp = () => {
   ReactDOM.render(
