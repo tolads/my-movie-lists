@@ -1,7 +1,9 @@
 import { action, observable, computed, toJS } from 'mobx';
 
-export class ListsStore {
-  constructor() {
+class ListsStore {
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+
     const id = Date.now();
 
     this.items = [
@@ -132,4 +134,4 @@ export class ListsStore {
   }
 }
 
-export default new ListsStore();
+export default ListsStore;

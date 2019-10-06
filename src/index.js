@@ -2,19 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure } from 'mobx';
 
-import ListsProvider from 'state/lists/ListsContext';
-import MoviesProvider from 'state/movies/MoviesContext';
+import RootStore, { RootStoreContext } from 'state/RootStore';
 import App from 'view/App';
 
 configure({ enforceActions: 'observed' });
 
 const renderApp = () => {
   ReactDOM.render(
-    <ListsProvider>
-      <MoviesProvider>
-        <App />
-      </MoviesProvider>
-    </ListsProvider>,
+    <RootStoreContext.Provider value={new RootStore()}>
+      <App />
+    </RootStoreContext.Provider>,
     document.getElementById('root'),
   );
 };

@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import { ListsContext } from 'state/lists/ListsContext';
+import { RootStoreContext } from 'state/RootStore';
 import ListItem from './ListItem';
 
 const useStyles = makeStyles(() => ({
@@ -20,13 +20,15 @@ const useStyles = makeStyles(() => ({
 
 const Lists = () => {
   const {
-    activeList,
-    addList,
-    deleteList,
-    listsJS: lists,
-    renameList,
-    setActiveList,
-  } = useContext(ListsContext);
+    listsStore: {
+      activeList,
+      addList,
+      deleteList,
+      listsJS: lists,
+      renameList,
+      setActiveList,
+    },
+  } = useContext(RootStoreContext);
   const classes = useStyles();
   const prevLists = useRef();
 

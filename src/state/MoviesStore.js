@@ -1,11 +1,11 @@
 import { action, computed, flow, observable, reaction } from 'mobx';
 
 import * as api from 'api/api';
-import listsStore from '../lists/ListsStore';
 
-export class MoviesStore {
-  constructor(lists) {
-    this.lists = lists;
+class MoviesStore {
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+
     this.items = {
       tt0111161: {
         poster:
@@ -75,11 +75,12 @@ export class MoviesStore {
    * @returns {Object[]}
    */
   @computed get moviesForActiveList() {
-    if (this.lists.activeList === undefined) {
+    const { listsStore } = this.rootStore;
+    if (listsStore.activeList === undefined) {
       return [];
     }
-    return this.lists.lists
-      .find(({ id }) => id === this.lists.activeList)
+    return listsStore.lists
+      .find(({ id }) => id === listsStore.activeList)
       .movies.map(movieId => {
         const movieData = this.movies[movieId];
         return movieData || { imdbId: movieId };
@@ -127,7 +128,7 @@ export class MoviesStore {
    */
   fetchMovie = flow(
     function* fetchMovieGenerator(id) {
-      this.lists.addMovieToActiveList(id);
+      this.rootStore.listsStore.addMovieToActiveList(id);
 
       if (this.movies[id]) {
         return;
@@ -143,4 +144,4 @@ export class MoviesStore {
   );
 }
 
-export default new MoviesStore(listsStore);
+export default MoviesStore;

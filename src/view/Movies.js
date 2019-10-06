@@ -13,8 +13,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { ListsContext } from 'state/lists/ListsContext';
-import { MoviesContext } from 'state/movies/MoviesContext';
+import { RootStoreContext } from 'state/RootStore';
 
 const highlightBackground = '#EDEDED';
 const useStyles = makeStyles(() => ({
@@ -64,11 +63,13 @@ const useStyles = makeStyles(() => ({
 
 const Table = () => {
   const {
-    moveMovieDownInActiveList: moveDown,
-    moveMovieUpInActiveList: moveUp,
-    removeMovieFromActiveList: remove,
-  } = useContext(ListsContext);
-  const { moviesForActiveList: movies } = useContext(MoviesContext);
+    listsStore: {
+      moveMovieDownInActiveList: moveDown,
+      moveMovieUpInActiveList: moveUp,
+      removeMovieFromActiveList: remove,
+    },
+    moviesStore: { moviesForActiveList: movies },
+  } = useContext(RootStoreContext);
   const classes = useStyles();
 
   const columns = [
