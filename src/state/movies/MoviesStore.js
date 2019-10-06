@@ -1,4 +1,4 @@
-import { action, computed, observable, reaction } from 'mobx';
+import { action, computed, flow, observable, reaction } from 'mobx';
 
 import * as api from 'api/api';
 import listsStore from '../lists/ListsStore';
@@ -22,26 +22,34 @@ export class MoviesStore {
     reaction(
       () => this.searchValue,
       searchValue => {
+        const setIsSearchFetching = action(
+          'setIsSearchFetching',
+          isFetching => {
+            this.isSearchFetching = isFetching;
+          },
+        );
         const trimmedKey = searchValue.trim();
         const result = this.searchKeys[trimmedKey];
 
         if (trimmedKey.length < 3 || result) {
-          this.setIsSearchFetching(false);
+          setIsSearchFetching(false);
           return;
         }
 
-        this.setIsSearchFetching(true);
+        setIsSearchFetching(true);
 
         window.clearTimeout(this.movieSearch);
         this.movieSearch = window.setTimeout(() => {
           api
             .searchMovies(trimmedKey)
-            .then(movies => {
-              this.movieSearchResultReceived(trimmedKey, movies);
-            })
+            .then(
+              action('movieSearchResultReceived', movies => {
+                this.searchKeys[trimmedKey] = movies;
+              }),
+            )
             .catch(console.error)
             .finally(() => {
-              this.setIsSearchFetching(false);
+              setIsSearchFetching(false);
             });
         }, 400);
       },
@@ -108,28 +116,6 @@ export class MoviesStore {
   }
 
   /**
-   * @param {boolean} isFetching
-   */
-  @action.bound setIsSearchFetching(isFetching) {
-    this.isSearchFetching = isFetching;
-  }
-
-  /**
-   * @param {string} key
-   * @param {Object[]} movies
-   */
-  @action.bound movieSearchResultReceived(key, movies) {
-    this.searchKeys[key] = movies;
-  }
-
-  /**
-   * @param {Object} movie
-   */
-  @action.bound movieReceived(movie) {
-    this.items[movie.imdbId] = movie;
-  }
-
-  /**
    * @param {string} value
    */
   @action.bound setSearchValue(value) {
@@ -139,20 +125,22 @@ export class MoviesStore {
   /**
    * @param {string} id
    */
-  @action.bound fetchMovie(id) {
-    this.lists.addMovieToActiveList(id);
+  fetchMovie = flow(
+    function* fetchMovieGenerator(id) {
+      this.lists.addMovieToActiveList(id);
 
-    if (this.movies[id]) {
-      return;
-    }
+      if (this.movies[id]) {
+        return;
+      }
 
-    api
-      .getMovie(id)
-      .then(movie => {
-        this.movieReceived(movie);
-      })
-      .catch(console.error);
-  }
+      try {
+        const movie = yield api.getMovie(id);
+        this.items[movie.imdbId] = movie;
+      } catch (error) {
+        console.error(error);
+      }
+    }.bind(this),
+  );
 }
 
 export default new MoviesStore(listsStore);
