@@ -79,12 +79,10 @@ class MoviesStore {
     if (listsStore.activeList === undefined) {
       return [];
     }
-    return listsStore.lists
-      .find(({ id }) => id === listsStore.activeList)
-      .movies.map(movieId => {
-        const movieData = this.movies[movieId];
-        return movieData || { imdbId: movieId };
-      });
+    return listsStore.activeItem.movies.map(movieId => {
+      const movieData = this.movies[movieId];
+      return movieData || { imdbId: movieId };
+    });
   }
 
   /**
