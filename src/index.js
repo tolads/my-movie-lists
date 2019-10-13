@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Provider from 'state/store';
+import store, { Context } from 'state/store';
 import App from 'view/App';
 
 const renderApp = () => {
   ReactDOM.render(
-    <Provider>
+    <Context.Provider value={store}>
       <App />
-    </Provider>,
+    </Context.Provider>,
     document.getElementById('root'),
   );
 };

@@ -1,4 +1,4 @@
-import { getEnv, getParent, types } from 'mobx-state-tree';
+import { flow, getEnv, getParent, types } from 'mobx-state-tree';
 
 const MoviesEntry = types.model('MoviesEntry', {
   genre: types.maybe(types.string),
@@ -33,12 +33,10 @@ const MoviesStore = types
       if (lists.activeList === undefined) {
         return [];
       }
-      return lists.lists
-        .find(({ id }) => id === lists.activeList)
-        .movies.map(movieId => {
-          const movieData = self.movies.get(movieId);
-          return movieData || { imdbId: movieId };
-        });
+      return lists.activeItem.movies.map(movieId => {
+        const movieData = self.movies.get(movieId);
+        return movieData || { imdbId: movieId };
+      });
     },
 
     /**
@@ -91,13 +89,6 @@ const MoviesStore = types
       },
 
       /**
-       * @param {Object} movie
-       */
-      movieReceived(movie) {
-        self.items.set(movie.imdbId, movie);
-      },
-
-      /**
        * @param {string} key
        */
       searchMovies(key) {
@@ -136,20 +127,20 @@ const MoviesStore = types
       /**
        * @param {string} id
        */
-      fetchMovie(id) {
+      fetchMovie: flow(function* fetchMovie(id) {
         getParent(self).lists.addMovieToActiveList(id);
 
         if (self.movies[id]) {
           return;
         }
 
-        getEnv(self)
-          .api.getMovie(id)
-          .then(movie => {
-            self.movieReceived(movie);
-          })
-          .catch(console.error);
-      },
+        try {
+          const movie = yield getEnv(self).api.getMovie(id);
+          self.items.set(movie.imdbId, movie);
+        } catch (error) {
+          console.error(error);
+        }
+      }),
       /* eslint-enable no-param-reassign */
     };
   });
