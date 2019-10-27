@@ -11,7 +11,7 @@ import {
 
 const Search = () => {
   const {
-    state: moviesState,
+    current: moviesState,
     fetchMovie,
     setSearchValue: setValue,
   } = useContext(MoviesContext);

@@ -1,3 +1,3 @@
-export const getLists = lists => lists.items;
+export const getLists = current => current.context.items;
 
-export const getActiveList = lists => lists.active;
+export const getActiveList = current => current.context.active;

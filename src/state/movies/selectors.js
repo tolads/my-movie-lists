@@ -1,6 +1,6 @@
 import { getLists, getActiveList } from '../lists/selectors';
 
-export const getMovies = movies => movies.items;
+export const getMovies = current => current.context.items;
 
 export const getMoviesForActiveList = ({
   lists: listsState,
@@ -21,14 +21,14 @@ export const getMoviesForActiveList = ({
     });
 };
 
-export const getResultForMovieSearch = (movies, { key }) =>
-  movies.searchKeys[key];
+export const getResultForMovieSearch = (current, { key }) =>
+  current.context.searchKeys[key];
 
-export const getSearchValue = movies => movies.currentSearchValue;
+export const getSearchValue = current => current.context.currentSearchValue;
 
-export const getOptionsForCurrentSearch = movies => {
-  const value = getSearchValue(movies);
-  const options = getResultForMovieSearch(movies, { key: value.trim() });
+export const getOptionsForCurrentSearch = current => {
+  const value = getSearchValue(current);
+  const options = getResultForMovieSearch(current, { key: value.trim() });
 
   return options
     ? options.map(({ title, year, imdbId }) => ({
@@ -38,4 +38,4 @@ export const getOptionsForCurrentSearch = movies => {
     : [];
 };
 
-export const isSearchFetching = movies => movies.isSearchFetching;
+export const isSearchFetching = current => current.value.search === 'fetching';

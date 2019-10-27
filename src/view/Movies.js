@@ -65,12 +65,12 @@ const useStyles = makeStyles(() => ({
 const Movies = () => {
   const classes = useStyles();
   const {
-    state: listsState,
+    current: listsState,
     moveMovieDownInActiveList: moveDown,
     moveMovieUpInActiveList: moveUp,
     removeMovieFromActiveList: remove,
   } = useContext(ListsContext);
-  const { state: moviesState } = useContext(MoviesContext);
+  const { current: moviesState } = useContext(MoviesContext);
   const movies = getMoviesForActiveList({
     lists: listsState,
     movies: moviesState,

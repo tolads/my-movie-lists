@@ -19,7 +19,7 @@ module.exports = {
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-param-reassign': [
       'error',
-      { props: true, ignorePropertyModificationsFor: ['draftState'] },
+      { props: true, ignorePropertyModificationsFor: ['draftContext'] },
     ],
   },
   env: {

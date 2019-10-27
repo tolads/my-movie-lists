@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 
 const Lists = () => {
   const {
-    state: listsState,
+    current: listsState,
     addList,
     deleteList,
     renameList,
