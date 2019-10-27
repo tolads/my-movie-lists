@@ -2,10 +2,7 @@ import { getLists, getActiveList } from '../lists/selectors';
 
 export const getMovies = current => current.context.items;
 
-export const getMoviesForActiveList = ({
-  lists: listsState,
-  movies: moviesState,
-}) => {
+export const getMoviesForActiveList = ({ listsState, moviesState }) => {
   const lists = getLists(listsState);
   const activeList = getActiveList(listsState);
   const movies = getMovies(moviesState);

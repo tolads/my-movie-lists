@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import Select from 'react-select';
 import Box from '@material-ui/core/Box';
 
+import { isListSelected } from 'state/lists/selectors';
+import { ListsContext } from 'state/lists/ListsContext';
 import { MoviesContext } from 'state/movies/MoviesContext';
 import {
   getOptionsForCurrentSearch,
@@ -10,6 +12,7 @@ import {
 } from 'state/movies/selectors';
 
 const Search = () => {
+  const { current: listsState } = useContext(ListsContext);
   const {
     current: moviesState,
     fetchMovie,
@@ -18,6 +21,7 @@ const Search = () => {
   const isLoading = isSearchFetching(moviesState);
   const options = getOptionsForCurrentSearch(moviesState);
   const value = getSearchValue(moviesState);
+  const showSearch = isListSelected(listsState);
 
   const handleInputChange = newValue => {
     setValue(newValue);
@@ -25,6 +29,10 @@ const Search = () => {
   const handleChange = selected => {
     fetchMovie(selected.value);
   };
+
+  if (!showSearch) {
+    return null;
+  }
 
   return (
     <Box my={2} data-test-id="search-container">
