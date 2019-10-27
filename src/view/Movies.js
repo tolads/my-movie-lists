@@ -71,10 +71,7 @@ const Movies = () => {
     removeMovieFromActiveList: remove,
   } = useContext(ListsContext);
   const { state: moviesState } = useContext(MoviesContext);
-  const movies = getMoviesForActiveList({
-    lists: listsState,
-    movies: moviesState,
-  });
+  const movies = getMoviesForActiveList({ listsState, moviesState });
 
   const columns = [
     {
