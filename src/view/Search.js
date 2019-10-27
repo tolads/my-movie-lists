@@ -4,6 +4,7 @@ import Select from 'react-select';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 
+import { isListSelected } from 'state/lists/selectors';
 import * as movieActions from 'state/movies/actions';
 import {
   getOptionsForCurrentSearch,
@@ -11,13 +12,24 @@ import {
   isSearchFetching,
 } from 'state/movies/selectors';
 
-const Search = ({ fetchMovie, isLoading, options, setValue, value }) => {
+const Search = ({
+  fetchMovie,
+  showSearch,
+  isLoading,
+  options,
+  setValue,
+  value,
+}) => {
   const handleInputChange = newValue => {
     setValue(newValue);
   };
   const handleChange = selected => {
     fetchMovie(selected.value);
   };
+
+  if (!showSearch) {
+    return null;
+  }
 
   return (
     <Box my={2} data-test-id="search-container">
@@ -36,6 +48,7 @@ const Search = ({ fetchMovie, isLoading, options, setValue, value }) => {
 
 Search.propTypes = {
   fetchMovie: PropTypes.func.isRequired,
+  showSearch: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -48,6 +61,7 @@ Search.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  showSearch: isListSelected(state),
   isLoading: isSearchFetching(state),
   options: getOptionsForCurrentSearch(state),
   value: getSearchValue(state),
