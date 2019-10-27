@@ -39,6 +39,13 @@ class ListsStore {
   }
 
   /**
+   * @returns {boolean}
+   */
+  @computed get isListSelected() {
+    return this.active !== undefined;
+  }
+
+  /**
    * @returns {?Object}
    */
   @computed get activeItem() {

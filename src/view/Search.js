@@ -7,6 +7,7 @@ import { RootStoreContext } from 'state/RootStore';
 
 const Search = () => {
   const {
+    listsStore: { isListSelected },
     moviesStore: {
       fetchMovie,
       isLoading,
@@ -21,6 +22,10 @@ const Search = () => {
   const handleChange = selected => {
     fetchMovie(selected.value);
   };
+
+  if (!isListSelected) {
+    return null;
+  }
 
   return (
     <Box my={2} data-test-id="search-container">
