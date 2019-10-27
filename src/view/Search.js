@@ -7,6 +7,7 @@ import { Context } from 'state/store';
 
 const Search = () => {
   const {
+    lists: { isListSelected },
     movies: {
       fetchMovie,
       isLoading,
@@ -21,6 +22,10 @@ const Search = () => {
   const handleChange = selected => {
     fetchMovie(selected.value);
   };
+
+  if (!isListSelected) {
+    return null;
+  }
 
   return (
     <Box my={2} data-test-id="search-container">

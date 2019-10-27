@@ -35,6 +35,13 @@ const ListsStore = types
     },
 
     /**
+     * @returns {boolean}
+     */
+    get isListSelected() {
+      return this.active !== undefined;
+    },
+
+    /**
      * @returns {?Object}
      */
     get activeItem() {
