@@ -39,7 +39,6 @@ const moviesMachine = Machine(
       },
       searchKeys: {},
       currentSearchValue: '',
-      isSearchFetching: false,
     },
     states: {
       search: {
