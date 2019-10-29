@@ -20,7 +20,7 @@ const fetchMovie = (context, event) => {
   return api.getMovie(event.id);
 };
 
-const listsMachine = Machine(
+const moviesMachine = Machine(
   {
     id: 'movies',
     type: 'parallel',
@@ -133,4 +133,4 @@ const listsMachine = Machine(
   },
 );
 
-export default listsMachine;
+export default moviesMachine;
