@@ -16,7 +16,7 @@ import listsMachine from './listsMachine';
 export const ListsContext = createContext();
 
 const ListsProvider = ({ children }) => {
-  const [current, send] = useMachine(listsMachine);
+  const [current, send] = useMachine(listsMachine, { devTools: true });
 
   const addList = () => send(ADD_LIST);
 
