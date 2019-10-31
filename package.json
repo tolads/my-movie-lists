@@ -18,7 +18,6 @@
     "react-select": "^3.0.4",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
-    "redux-logger": "^3.0.6",
     "redux-saga": "^1.1.0",
     "reselect": "^4.0.0"
   },
