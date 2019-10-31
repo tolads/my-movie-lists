@@ -1,6 +1,7 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 
+import useReducerWithLogger from '../useReducerWithLogger';
 import {
   ADD_LIST,
   ADD_MOVIE_TO_ACTIVE_LIST,
@@ -16,7 +17,11 @@ import reducer, { defaultState } from './reducer';
 export const ListsContext = createContext();
 
 const ListsProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, defaultState);
+  const [state, dispatch] = useReducerWithLogger(
+    reducer,
+    defaultState,
+    'ListsProvider',
+  );
 
   const addList = () =>
     dispatch({

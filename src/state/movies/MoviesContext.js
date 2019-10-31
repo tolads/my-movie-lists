@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import * as api from 'api/api';
@@ -9,6 +9,7 @@ import {
   SET_IS_SEARCH_FETCHING,
   SET_SEARCH_VALUE_IN_STATE,
 } from './actionTypes';
+import useReducerWithLogger from '../useReducerWithLogger';
 import reducer, { defaultState } from './reducer';
 import { getMovies, getResultForMovieSearch } from './selectors';
 
@@ -18,7 +19,11 @@ let movieSearch;
 
 const MoviesProvider = ({ children }) => {
   const { addMovieToActiveList } = useContext(ListsContext);
-  const [state, dispatch] = useReducer(reducer, defaultState);
+  const [state, dispatch] = useReducerWithLogger(
+    reducer,
+    defaultState,
+    'MoviesProvider',
+  );
 
   /**
    * @param {boolean} isFetching
