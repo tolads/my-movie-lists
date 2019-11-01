@@ -45,7 +45,7 @@
     "eject": "react-scripts eject"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
+    "{src,cypress}/**/*.{js,jsx}": [
       "eslint --fix",
       "git add"
     ]
