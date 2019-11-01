@@ -9,35 +9,33 @@
   ],
   "homepage": "https://tolads.github.io/my-movie-lists",
   "dependencies": {
-    "@material-ui/core": "^4.4.2",
-    "@material-ui/icons": "^4.4.1",
-    "gh-pages": "^2.1.1",
-    "immer": "^4.0.0",
+    "@material-ui/core": "^4.5.2",
+    "@material-ui/icons": "^4.5.1",
+    "immer": "^5.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
-    "react-select": "^3.0.4",
+    "react-select": "^3.0.8",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
-    "redux-logger": "^3.0.6",
     "redux-saga": "^1.1.0",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^1.10.1",
     "@cypress/instrument-cra": "^1.0.0",
-    "cross-env": "^5.2.1",
-    "cypress": "^3.4.1",
+    "cypress": "^3.6.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.3.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^3.0.5",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "gh-pages": "^2.1.1",
+    "husky": "^3.0.9",
     "istanbul-lib-coverage": "^2.0.5",
-    "lint-staged": "^9.2.5",
+    "lint-staged": "^9.4.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "react-scripts": "3.1.1"
+    "react-scripts": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,14 +43,13 @@
     "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "test": "react-scripts test",
-    "test-js": "cross-env CI=true react-scripts test",
+    "test": "cypress run",
     "cypress:open": "cypress open",
     "lint-js": "node node_modules/eslint/bin/eslint.js src/ --config .eslintrc.js",
     "eject": "react-scripts eject"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
+    "{src,cypress}/**/*.{js,jsx}": [
       "eslint --fix",
       "git add"
     ]
@@ -64,12 +61,14 @@
   },
   "browserslist": {
     "production": [
-      ">2%"
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions",
+      "> 1%"
     ],
     "development": [
       "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 firefox version"
     ]
   }
 }
