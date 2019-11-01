@@ -119,6 +119,7 @@ describe('Deletes lists', () => {
       .click();
 
     getLists().should('not.exist');
+    getSearch().should('not.exist');
   });
 });
 
@@ -129,9 +130,8 @@ it('Filter returns no result', () => {
     .type('WONTBERESULT')
     .should('have.value', 'WONTBERESULT');
 
-  getSearch().contains('Loading');
-
-  getSearch().contains('No options');
+  getSearch().should('contain', 'Loading');
+  getSearch().should('contain', 'No options');
 
   getSearch()
     .click()
@@ -146,7 +146,7 @@ const addMovie = () => {
     .find('input')
     .type('Forrest Gump');
 
-  cy.get('#react-select-2-option-0')
+  cy.get(selectors.searchFirstOption)
     .contains('Forrest Gump (1994)')
     .click();
 };
@@ -203,34 +203,34 @@ it('Moves movies in active list', () => {
       .find('tbody tr')
       .last();
 
-  getFirstRow().contains('The Shawshank Repemption');
-  getLastRow().contains('Forrest Gump');
+  getFirstRow().should('contain', 'The Shawshank Repemption');
+  getLastRow().should('contain', 'Forrest Gump');
 
   getFirstRow()
     .find(selectors.moveMovieDownBtn)
     .click();
 
-  getFirstRow().contains('Forrest Gump');
-  getLastRow().contains('The Shawshank Repemption');
+  getFirstRow().should('contain', 'Forrest Gump');
+  getLastRow().should('contain', 'The Shawshank Repemption');
 
   getLastRow()
     .find(selectors.moveMovieDownBtn)
     .click();
 
-  getFirstRow().contains('The Shawshank Repemption');
-  getLastRow().contains('Forrest Gump');
+  getFirstRow().should('contain', 'The Shawshank Repemption');
+  getLastRow().should('contain', 'Forrest Gump');
 
   getFirstRow()
     .find(selectors.moveMovieUpBtn)
     .click();
 
-  getFirstRow().contains('Forrest Gump');
-  getLastRow().contains('The Shawshank Repemption');
+  getFirstRow().should('contain', 'Forrest Gump');
+  getLastRow().should('contain', 'The Shawshank Repemption');
 
   getLastRow()
     .find(selectors.moveMovieUpBtn)
     .click();
 
-  getFirstRow().contains('The Shawshank Repemption');
-  getLastRow().contains('Forrest Gump');
+  getFirstRow().should('contain', 'The Shawshank Repemption');
+  getLastRow().should('contain', 'Forrest Gump');
 });
