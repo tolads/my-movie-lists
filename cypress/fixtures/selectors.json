@@ -2,6 +2,7 @@
   "listsList": "[data-test-id=lists-list]",
   "createListBtn": "[data-test-id=create-list-btn]",
   "searchContainer": "[data-test-id=search-container]",
+  "searchFirstOption": "#react-select-2-option-0",
   "moviesTable": "[data-test-id=movies-table]",
   "deleteListBtn": "[data-test-id=delete-btn]",
   "removeMovieBtn": "[data-test-id=remove-btn]",
