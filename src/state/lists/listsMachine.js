@@ -75,7 +75,7 @@ const listsMachine = Machine(
     actions: {
       addList: assign(
         produce(draftContext => {
-          const newId = new Date();
+          const newId = Date.now();
           draftContext.active = newId;
           draftContext.items.push({ id: newId, label: '', movies: [] });
         }),
