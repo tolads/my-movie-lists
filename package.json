@@ -21,7 +21,6 @@
   "devDependencies": {
     "@cypress/code-coverage": "^1.10.1",
     "@cypress/instrument-cra": "^1.0.0",
-    "cross-env": "^5.2.1",
     "customize-cra": "^0.7.0",
     "cypress": "^3.6.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -37,12 +36,9 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start-for-cypress-coverage": "react-app-rewired -r @cypress/instrument-cra start",
-    "test": "react-scripts test",
-    "test-js": "cross-env CI=true react-scripts test",
+    "build": "react-app-rewired build",
+    "test": "cypress run",
     "cypress:open": "cypress open",
     "lint-js": "node node_modules/eslint/bin/eslint.js src/ --config .eslintrc.js",
     "eject": "react-scripts eject"
