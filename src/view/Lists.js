@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -37,7 +37,7 @@ const Lists = () => {
   });
 
   return (
-    <>
+    <Fragment>
       <div className={classes.header}>
         <Typography variant="subtitle1">My lists</Typography>
         <IconButton
@@ -68,7 +68,7 @@ const Lists = () => {
           ))}
         </List>
       </Paper>
-    </>
+    </Fragment>
   );
 };
 

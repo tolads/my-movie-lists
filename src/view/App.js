@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
@@ -31,7 +31,7 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <Fragment>
       <CssBaseline />
       <HideOnScroll>
         <AppBar>
@@ -63,7 +63,7 @@ const App = () => {
           {'.'}
         </p>
       </div>
-    </>
+    </Fragment>
   );
 };
 

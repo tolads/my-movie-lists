@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -77,7 +77,7 @@ const Table = () => {
       header: '#',
       className: classes.iconCell,
       content: (movie, index) => (
-        <>
+        <Fragment>
           {index + 1}
           <div className={classes.icons}>
             <IconButton
@@ -102,7 +102,7 @@ const Table = () => {
               <ArrowDropDownIcon fontSize="small" />
             </IconButton>
           </div>
-        </>
+        </Fragment>
       ),
     },
     {
