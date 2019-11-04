@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,7 +36,7 @@ const Lists = ({
   });
 
   return (
-    <>
+    <Fragment>
       <div className={classes.header}>
         <Typography variant="subtitle1">My lists</Typography>
         <IconButton
@@ -67,7 +67,7 @@ const Lists = ({
           ))}
         </List>
       </Paper>
-    </>
+    </Fragment>
   );
 };
 
