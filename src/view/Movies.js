@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -78,7 +78,7 @@ const Movies = () => {
       header: '#',
       className: classes.iconCell,
       content: (movie, index) => (
-        <>
+        <Fragment>
           {index + 1}
           <div className={classes.icons}>
             <IconButton
@@ -103,7 +103,7 @@ const Movies = () => {
               <ArrowDropDownIcon fontSize="small" />
             </IconButton>
           </div>
-        </>
+        </Fragment>
       ),
     },
     {
