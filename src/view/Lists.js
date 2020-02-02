@@ -96,7 +96,4 @@ const mapDispatchToProps = {
   setActiveList: listActions.setActiveList,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Lists);
+export default connect(mapStateToProps, mapDispatchToProps)(Lists);
