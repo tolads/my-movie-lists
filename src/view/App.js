@@ -59,8 +59,7 @@ const App = () => {
       <div className={classes.footer}>
         <p>
           {`The site uses `}
-          <Link href="http://www.omdbapi.com/">OMDb API</Link>
-          {'.'}
+          <Link href="http://www.omdbapi.com/">OMDb API</Link>.
         </p>
       </div>
     </Fragment>
