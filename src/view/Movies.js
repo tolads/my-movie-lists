@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -71,7 +71,7 @@ const Table = ({ moveDown, moveUp, movies, remove }) => {
       header: '#',
       className: classes.iconCell,
       content: (movie, index) => (
-        <>
+        <Fragment>
           {index + 1}
           <div className={classes.icons}>
             <IconButton
@@ -96,7 +96,7 @@ const Table = ({ moveDown, moveUp, movies, remove }) => {
               <ArrowDropDownIcon fontSize="small" />
             </IconButton>
           </div>
-        </>
+        </Fragment>
       ),
     },
     {
@@ -191,7 +191,4 @@ const mapDispatchToProps = {
   remove: listActions.removeMovieFromActiveList,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
