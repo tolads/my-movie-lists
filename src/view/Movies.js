@@ -191,7 +191,4 @@ const mapDispatchToProps = {
   remove: listActions.removeMovieFromActiveList,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
